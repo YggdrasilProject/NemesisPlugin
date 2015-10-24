@@ -1,0 +1,4 @@
+[gerrit]
+host=review.vm.nemesis
+port=29418
+project=yggdrasil/nemesis-plugin.git
