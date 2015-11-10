@@ -10,5 +10,6 @@
     <orderEntry type="library" name="YggdrasilCore" level="project" />
     <orderEntry type="library" name="BifrostPlugin" level="project" />
     <orderEntry type="library" name="com.googlecode.json-simple:json-simple:1.1.1" level="project" />
+    <orderEntry type="library" name="yamlbeans-1.09" level="project" />
   </component>
 </module>
