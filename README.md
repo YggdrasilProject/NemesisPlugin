@@ -1,2 +1,2 @@
 # NemesisPlugin
-Continous Integration plugin for Yggdrasil
+Gerrit integration plugin fot Yggdrasil
