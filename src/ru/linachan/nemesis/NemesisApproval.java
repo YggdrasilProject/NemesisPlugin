@@ -25,4 +25,8 @@ public class NemesisApproval {
     public Integer getValue() {
         return value;
     }
+
+    public String toString() {
+        return type.toString() + ": " + value;
+    }
 }

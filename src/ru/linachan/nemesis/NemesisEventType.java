@@ -8,7 +8,8 @@ public enum NemesisEventType {
     MERGE_FAILED("merge-failed"),
     PATCHSET_CREATED("patchset-created"),
     REVIEWER_ADDED("reviewer-added"),
-    REF_UPDATED("ref-updated");
+    REF_UPDATED("ref-updated"),
+    TOPIC_CHANGED("topic-changed");
 
     private String eventType;
 

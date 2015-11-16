@@ -7,16 +7,16 @@ import ru.linachan.yggdrasil.component.YggdrasilPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NemesisPlugin extends YggdrasilPlugin {
-
-    private Queue<NemesisEvent> eventQueue;
 
     private String serverHost;
     private Integer serverPort;
     private BifrostSSHAuth serverAuth;
+
+    private List<NemesisEventHandler> eventHandlers;
 
     @Override
     protected void setUpDependencies() {
@@ -25,7 +25,7 @@ public class NemesisPlugin extends YggdrasilPlugin {
 
     @Override
     protected void onInit() {
-        eventQueue = new PriorityQueue<>();
+        eventHandlers = new ArrayList<>();
 
         serverHost = core.getConfig("NemesisGitHost", "localhost");
         serverPort = Integer.parseInt(core.getConfig("NemesisGitPort", "29418"));
@@ -53,12 +53,16 @@ public class NemesisPlugin extends YggdrasilPlugin {
         return true;
     }
 
-    public void putEvent(NemesisEvent event) {
-        eventQueue.add(event);
+    public void registerHandler(NemesisEventHandler handler) {
+        eventHandlers.add(handler);
+        handler.onInit(core);
     }
 
-    public NemesisEvent getEvent() {
-        return (!eventQueue.isEmpty()) ? eventQueue.remove() : null;
+    public void handleEvent(NemesisEvent event) {
+        core.logInfo("NemesisEvent: " + event.toString());
+        for (NemesisEventHandler handler: eventHandlers) {
+            handler.handleEvent(event);
+        }
     }
 
     public BifrostSSHConnection getConnection() {

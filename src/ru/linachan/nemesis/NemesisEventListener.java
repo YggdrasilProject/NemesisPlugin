@@ -33,7 +33,7 @@ public class NemesisEventListener extends YggdrasilService {
                     if (eventData != null && eventData.length() > 0) {
                         NemesisEvent event = new NemesisEvent(eventData);
 
-                        core.getPluginManager().getPlugin(NemesisPlugin.class).putEvent(event);
+                        core.getPluginManager().getPlugin(NemesisPlugin.class).handleEvent(event);
                     }
                 }
 

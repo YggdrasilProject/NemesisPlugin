@@ -11,9 +11,9 @@ import java.util.List;
 public class NemesisEvent {
 
     private NemesisEventType eventType;
-    private NemesisChangeRequest changeRequest;
-    private NemesisPatchSet patchSet;
-    private NemesisAuthor author;
+    private NemesisChangeRequest changeRequest = null;
+    private NemesisPatchSet patchSet = null;
+    private NemesisAuthor author = null;
     private String comment;
     private Long eventTime;
     private List<NemesisApproval> approvals;
@@ -24,8 +24,13 @@ public class NemesisEvent {
 
             eventType = NemesisEventType.getEventType((String) eventObject.get("type"));
 
-            changeRequest = new NemesisChangeRequest((JSONObject) eventObject.get("change"));
-            patchSet = new NemesisPatchSet((JSONObject) eventObject.get("patchSet"));
+            if (eventObject.containsKey("change")) {
+                changeRequest = new NemesisChangeRequest((JSONObject) eventObject.get("change"));
+            }
+
+            if (eventObject.containsKey("patchSet")) {
+                patchSet = new NemesisPatchSet((JSONObject) eventObject.get("patchSet"));
+            }
 
             switch(eventType) {
                 case CHANGE_ABANDONED:
@@ -98,5 +103,15 @@ public class NemesisEvent {
 
     public List<NemesisApproval> getApprovals() {
         return approvals;
+    }
+
+    public String toString() {
+        String representation = "";
+
+        representation += (author != null) ? author.getName() + " " : "";
+        representation += "[" + eventType + "]";
+        representation += (changeRequest != null) ? " " + changeRequest.getProject() + " :: " + changeRequest.getSubject() : "";
+
+        return representation;
     }
 }
